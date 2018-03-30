@@ -1,0 +1,32 @@
+{
+  "name": "react-boilerplate",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.18.0",
+    "react": "^16.2.0",
+    "react-animated-number": "^0.4.4",
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.6",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "react-router-redux": "^4.0.8",
+    "react-scripts": "1.1.1",
+    "recharts": "^1.0.0-beta.10",
+    "redux": "^3.7.2",
+    "redux-freeze": "^0.1.5",
+    "redux-logger": "^3.0.6",
+    "redux-promise-middleware": "^5.0.0",
+    "redux-thunk": "^2.2.0",
+    "replace": "^0.3.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "generate": "node ./generators/bin -n"
+  },
+  "devDependencies": {
+    "command-line-args": "^5.0.2",
+    "pascal-case": "^2.0.1"
+  }
+}

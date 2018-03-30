@@ -10,12 +10,12 @@ export default class Home extends Component {
   }
   
   componentDidMount() {
-    this.props.dispatch(Actions.test("Steve Jobs"));
+    this.props.dispatch(Actions.test("John Doe"));
   }
   render() {
     return (
       <Layout className="home">
-        Welcome Home {this.props.test}
+        Welcome to Home {this.props.test}
       </Layout>
     );
   }

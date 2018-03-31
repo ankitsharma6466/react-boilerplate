@@ -20,7 +20,7 @@ module.exports = (componentName, routeName) => {
   nameList.pascalCasedName = pascalcase(nameList.name);
 
   let dir = './src/views/' + nameList.name;
-  // fs.mkdirSync(dir);
+  fs.mkdirSync(dir);
 
   const templateList = [
     {
@@ -64,7 +64,7 @@ module.exports = (componentName, routeName) => {
     }
   };
   
-  // templateList.forEach(fileCreator);
+  templateList.forEach(fileCreator);
   
   //reducer and routes entry
   const replaceEntries = [

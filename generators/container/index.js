@@ -1,6 +1,8 @@
 const fs = require('fs');
 const pascalcase = require('pascal-case');
 var replace = require("replace");
+const replaceNew = require('replace-in-file');
+
 
 module.exports = (componentName, routeName) => {
   
@@ -18,7 +20,7 @@ module.exports = (componentName, routeName) => {
   nameList.pascalCasedName = pascalcase(nameList.name);
 
   let dir = './src/views/' + nameList.name;
-  fs.mkdirSync(dir);
+  // fs.mkdirSync(dir);
 
   const templateList = [
     {
@@ -62,40 +64,38 @@ module.exports = (componentName, routeName) => {
     }
   };
   
-  templateList.forEach(fileCreator);
+  // templateList.forEach(fileCreator);
   
   //reducer and routes entry
   const replaceEntries = [
     {
-      replaceStr: "//GENERATE_WRITE_IMPORT",
-      replaceWith: `import ${nameList.name}Reducer from '../views/${nameList.name}/reducer'\n//GENERATE_WRITE_IMPORT`,
-      path: ['./src/app/reducers.js']
+      files: './src/app/reducers.js',
+      from: /(import.*\n(?!.*import.*))/,
+      to: `$1import ${nameList.name}Reducer from '../views/${nameList.name}/reducer'\n`,
     },
     {
-      replaceStr: "//GENERATE_WRITE_REDUCER",
-      replaceWith: `${nameList.name}: ${nameList.name}Reducer,\n  //GENERATE_WRITE_REDUCER`,
-      path: ['./src/app/reducers.js']
+      files: './src/app/reducers.js',
+      from: /(combineReducers\(\{.*,\n)/s,
+      to: `$1  ${nameList.name}: ${nameList.name}Reducer,\n`,
     },
     {
-      replaceStr: "//GENERATE_WRITE_IMPORT",
-      replaceWith: `import ${nameList.pascalCasedName} from '../views/${nameList.name}'\n//GENERATE_WRITE_IMPORT`,
-      path: ['./src/app/routes.js']
+      files: './src/app/routes.js',
+      from: /(import.*\n(?!.*import.*))/,
+      to: `$1import ${nameList.pascalCasedName} from '../views/${nameList.name}'\n`,
     },
     {
-      replaceStr: "\\{/\\*GENERATE_WRITE_ROUTER\\*/\\}",
-      replaceWith: `<Route exact path='/${nameList.route}' component={${nameList.pascalCasedName}}/>\n      {/*GENERATE_WRITE_ROUTER*/}`,
-      path: ['./src/app/routes.js']
-    }
+      files: './src/app/routes.js',
+      from: /(<Switch>.*)<Route path="\*" component={.*}\/>/s,
+      to: `$1<Route exact path='/${nameList.route}' component={${nameList.pascalCasedName}}/>\n      <Route path="*" component={NotFound}/>`,
+    },
   ];
   
-  replaceEntries.forEach(entry => {
-    replace({
-      regex: entry.replaceStr,
-      replacement: entry.replaceWith,
-      paths: entry.path,
-      recursive: true,
-      silent: true,
-    });
+  replaceEntries.forEach(options => {
+    try {
+      replaceNew.sync(options);
+    } catch (error) {
+      console.error('Error occurred:', error);
+    }
   });
   
   console.log(`*********** Component ${nameList.name} Generated ***********`);

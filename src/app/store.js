@@ -5,6 +5,11 @@ import thunk from "redux-thunk";
 import promise from "redux-promise-middleware";
 import { reducers } from "./reducers";
 
+/**
+ *  This defines base configuration for setting up redux with react.
+ *  All the middlewares are defined here and base store is created.
+ */
+
 let middlewares = [];
 
 //for promises, since we are using axios for networking

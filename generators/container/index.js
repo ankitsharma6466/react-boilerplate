@@ -1,6 +1,5 @@
 const fs = require('fs');
 const pascalcase = require('pascal-case');
-var replace = require("replace");
 const replaceNew = require('replace-in-file');
 
 

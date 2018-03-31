@@ -7,7 +7,7 @@ import { reducers } from "./reducers";
 
 /**
  *  This defines base configuration for setting up redux with react.
- *  All the middlewares are defined here and base store is created.
+ *  All the middlewares are defined here and base store is created for provider.
  */
 
 let middlewares = [];
